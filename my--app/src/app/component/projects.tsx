@@ -94,7 +94,7 @@ const ProjectsPage: React.FC = () => {
     },
         {
       id: 5,
-      title: "Baby Drive",
+      title: "Revoclean Turntable Photography System",
       description: `Developed a custom hardware setup for turntable photography, enabling 360-degree product
       photography. The system featured a rotating platform controlled by stepper motors for precise and
       consistent rotation. Integrated light strips and LDR sensors to adjust lighting conditions automatically
