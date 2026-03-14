@@ -15,7 +15,7 @@ export default function Home() {
       {/* Holographic Display Background */}
       <div className="fixed inset-0 z-0">
         {/* Base Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-slate-950 to-black">
+        <div className="absolute inset-0 bg-linear-to-br from-gray-950 via-slate-950 to-black">
           
           {/* Floating Holo Panels */}
           <div className="absolute inset-0 overflow-hidden">
@@ -41,8 +41,8 @@ export default function Home() {
           </div>
           
           {/* Gradient Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-transparent to-purple-900/10"></div>
-          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-purple-900/5 to-transparent"></div>
+          <div className="absolute inset-0 bg-linear-to-br from-purple-900/10 via-transparent to-purple-900/10"></div>
+          <div className="absolute inset-0 bg-linear-to-tr from-transparent via-purple-900/5 to-transparent"></div>
         </div>
       </div>
 
@@ -247,7 +247,7 @@ export default function Home() {
           60% { transform: translateX(-160px) translateY(-30px); }
           85% { opacity: 1; }
           100% { transform: translateX(-240px) translateY(60px); opacity: 0; }
-        }Module not found: Can't resolve 'lucide-react'
+        }
 
         @keyframes particle-drift-3 {
           0% { transform: translateX(0) translateY(0); opacity: 0; }

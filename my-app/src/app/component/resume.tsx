@@ -158,11 +158,11 @@ const ResumePage: React.FC = () => {
 ];
 
   return (
-    <div className="min-h-screen text-white py-20 px-6">
+    <div className="min-h-screen text-white py-14 sm:py-20 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className={`text-center mb-20 transform transition-all duration-1200 ease-out ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-16 opacity-0'}`}>
-          <h1 className="text-5xl lg:text-6xl font-bold mb-6">
+          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-6">
             My <span className="text-transparent bg-gradient-to-r from-orange-400 via-pink-400 to-purple-400 bg-clip-text">Resume</span>
           </h1>
           <div className={`w-24 h-1 bg-gradient-to-r from-orange-400 via-pink-400 to-purple-400 mx-auto rounded-full transform transition-all duration-1000 delay-300 ${isVisible ? 'scale-x-100' : 'scale-x-0'}`}></div>
@@ -170,7 +170,7 @@ const ResumePage: React.FC = () => {
 
         {/* Skills Section */}
         <div className={`mb-20 transform transition-all duration-1000 ease-out ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`} style={{ transitionDelay: '400ms' }}>
-          <h2 className="text-4xl font-bold text-center mb-16 text-white">My Skills</h2>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-12 sm:mb-16 text-white">My Skills</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {skillCategories.map((category, categoryIndex) => (
@@ -180,7 +180,7 @@ const ResumePage: React.FC = () => {
                 style={{ transitionDelay: `${categoryIndex * 200}ms` }}
               >
                 {/* Category Card */}
-                <div className="relative bg-gradient-to-br from-slate-900/90 to-gray-900/90 backdrop-blur-sm border border-slate-700/50 rounded-lg p-8 hover:bg-gradient-to-br hover:from-slate-800/90 hover:to-gray-800/90 transition-all duration-500 group-hover:transform group-hover:-translate-y-1 group-hover:shadow-xl" style={{
+                <div className="relative bg-gradient-to-br from-slate-900/90 to-gray-900/90 backdrop-blur-sm border border-slate-700/50 rounded-lg p-5 sm:p-8 hover:bg-gradient-to-br hover:from-slate-800/90 hover:to-gray-800/90 transition-all duration-500 group-hover:transform group-hover:-translate-y-1 group-hover:shadow-xl" style={{
                   borderColor: categoryIndex % 3 === 0 ? 'var(--gradient-start)' : categoryIndex % 3 === 1 ? 'var(--gradient-mid)' : 'var(--gradient-end)',
                   boxShadow: categoryIndex % 3 === 0 ? '0 0 20px rgba(183, 29, 238, 0.1)' : categoryIndex % 3 === 1 ? '0 0 20px rgba(201, 77, 135, 0.1)' : '0 0 20px rgba(216, 118, 49, 0.1)'
                 }}>
@@ -190,16 +190,16 @@ const ResumePage: React.FC = () => {
                   
                   {/* Category Title */}
                   <div className="relative z-10 mb-8">
-                    <h3 className="text-2xl font-bold text-white mb-2">{category.title}</h3>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">{category.title}</h3>
                     <div className="w-16 h-1 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full group-hover:w-24 transition-all duration-500"></div>
                   </div>
                   
                   {/* Skills Grid */}
-                  <div className="relative z-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  <div className="relative z-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
                     {category.skills.map((skill, skillIndex) => (
                       <div 
                         key={skillIndex}
-                        className="group/skill relative p-6 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl hover:bg-white/15 hover:border-purple-400/60 transition-all duration-500 hover:scale-105 hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/25"
+                        className="group/skill relative p-4 sm:p-6 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl hover:bg-white/15 hover:border-purple-400/60 transition-all duration-500 hover:scale-105 hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/25"
                         style={{ transitionDelay: `${skillIndex * 100}ms` }}
                       >
                         {/* Skill Icon */}
@@ -253,9 +253,9 @@ const ResumePage: React.FC = () => {
                 boxShadow: index % 3 === 0 ? '0 0 20px rgba(183, 29, 238, 0.2)' : index % 3 === 1 ? '0 0 20px rgba(201, 77, 135, 0.2)' : '0 0 20px rgba(216, 118, 49, 0.2)',
                 transitionDelay: `${index * 200}ms`
               }}>
-                <div className="flex items-center gap-6">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
                   <div className="flex-shrink-0">
-                    <div className="w-20 h-20 rounded-full bg-gray-800/50 border flex items-center justify-center overflow-hidden transition-all duration-300" style={{
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gray-800/50 border flex items-center justify-center overflow-hidden transition-all duration-300" style={{
                       borderColor: index % 3 === 0 ? 'var(--gradient-start)' : index % 3 === 1 ? 'var(--gradient-mid)' : 'var(--gradient-end)'
                     }}>
                       <Image src={edu.logo} alt={edu.institution} width={64} height={64} className="object-contain rounded-full" />

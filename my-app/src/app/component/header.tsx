@@ -52,7 +52,7 @@ export default function Header() {
   return (
     <>
       <nav className="relative top-0 left-0 right-0 z-50 bg-transparent">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 lg:h-20">
             <div className="flex items-center">
               <div className="text-2xl font-bold"></div>
@@ -85,6 +85,7 @@ export default function Header() {
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="lg:hidden p-2 rounded-lg border border-purple-600/50 hover:bg-purple-600/20 transition-all duration-300 hover:scale-110"
+              aria-label="Toggle navigation menu"
             >
               <div className="relative w-6 h-6">
                 <Menu
@@ -110,7 +111,7 @@ export default function Header() {
           }`}
         >
             <div className="bg-black/95 backdrop-blur-lg border-t border-purple-600/30">
-            <div className="container mx-auto px-6 py-4">
+            <div className="container mx-auto px-4 sm:px-6 py-4">
               <div className="flex flex-col space-y-4">
                 {navItems.map((item) => (
                   <button
@@ -138,12 +139,12 @@ export default function Header() {
       </nav>
 
       <header className="min-h-screen text-white overflow-hidden relative">
-        <div className="container mx-auto px-6 pt-8 pb-20 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
+        <div className="container mx-auto px-4 sm:px-6 pt-6 sm:pt-8 pb-16 sm:pb-20 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center min-h-[80vh]">
             {/* Left Content */}
             <div className="order-2 lg:order-1">
               <h1
-                className={`text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 leading-tight transform transition-all duration-1000 ${
+                className={`text-3xl sm:text-4xl lg:text-6xl xl:text-7xl font-bold mb-4 leading-tight transform transition-all duration-1000 ${
                   isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
                 }`}
               >
@@ -154,7 +155,7 @@ export default function Header() {
               </h1>
 
               <p
-                className={`text-xl lg:text-2xl mb-6 text-gray-300 transform transition-all duration-1000 delay-300 ${
+                className={`text-base sm:text-lg lg:text-2xl mb-6 text-gray-300 transform transition-all duration-1000 delay-300 ${
                   isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
                 }`}
               >
@@ -171,7 +172,7 @@ export default function Header() {
               </p>
 
               <p
-                className={`text-gray-400 mb-8 leading-relaxed max-w-lg text-lg transform transition-all duration-1000 delay-500 ${
+                className={`text-gray-400 mb-8 leading-relaxed max-w-lg text-sm sm:text-base lg:text-lg transform transition-all duration-1000 delay-500 ${
                   isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
                 }`}
               >
@@ -185,7 +186,7 @@ export default function Header() {
               </p>
 
               <div
-                className={`flex gap-4 mb-8 transform transition-all duration-1000 delay-700 ${
+                className={`flex flex-wrap gap-3 sm:gap-4 mb-8 transform transition-all duration-1000 delay-700 ${
                   isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
                 }`}
               >
@@ -230,7 +231,7 @@ export default function Header() {
 
               <button
                 onClick={handleDownloadCV}
-                className="group relative px-8 py-4 text-white rounded-full font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 text-white rounded-full font-semibold text-base sm:text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl"
                 style={{
                   background: 'linear-gradient(to right, var(--gradient-start), var(--gradient-mid), var(--gradient-end))',
                   boxShadow: '0 0 20px rgba(183, 29, 238, 0.3)'
@@ -251,7 +252,7 @@ export default function Header() {
                 }`}
               >
                 {/* Profile Image - No animation, larger for desktop */}
-                <div className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-96 lg:h-96 xl:w-[30rem] xl:h-[30rem] rounded-full overflow-visible lg:ml-20">
+                <div className="relative w-44 h-44 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-96 lg:h-96 xl:w-[30rem] xl:h-[30rem] rounded-full overflow-visible lg:ml-8 xl:ml-20">
                   {/* Glowing radial light behind the profile image */}
                   <div className="absolute inset-0 flex items-center justify-center -z-10">
                     <span className="glow-radial w-40 h-40 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-[28rem] xl:h-[28rem] rounded-full" aria-hidden="true"></span>

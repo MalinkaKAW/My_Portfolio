@@ -126,16 +126,16 @@ const ProjectsPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen text-white py-20 px-6">
+    <div className="min-h-screen text-white py-14 sm:py-20 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
         {/* Simple Header */}
         <div className={`text-center mb-16 transform transition-all duration-1000 ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
         }`}>
-          <h2 className="text-5xl lg:text-6xl font-bold mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-6">
             My <span className="text-transparent bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text">Projects</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto">
             Explore my latest work in web development and technology
           </p>
         </div>

@@ -73,11 +73,11 @@ const ServicesPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen text-white py-20 px-6 overflow-hidden">
+    <div className="min-h-screen text-white py-14 sm:py-20 px-4 sm:px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className={`text-center mb-20 transform transition-all duration-1200 ease-out ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-16 opacity-0'}`}>
-          <h2 className="text-5xl lg:text-6xl font-bold mb-6 animate-text-shimmer">
+          <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-6 animate-text-shimmer">
             My <span className="gradient-text">Services</span>
           </h2>
           <div className={`w-24 h-1 mx-auto rounded-full transform transition-all duration-1000 delay-300 ${isVisible ? 'scale-x-100' : 'scale-x-0'}`} style={{background: 'linear-gradient(to right, var(--gradient-start), var(--gradient-mid), var(--gradient-end))'}}></div>
@@ -111,7 +111,7 @@ const ServicesPage: React.FC = () => {
                   {/* Content */}
                   <div className="relative z-10 flex flex-col h-full">
                     <div className="flex items-center justify-between mb-6">
-                      <span className="text-6xl font-bold text-white/30 group-hover:text-white/60 transition-all duration-500 transform group-hover:scale-105">
+                      <span className="text-5xl sm:text-6xl font-bold text-white/30 group-hover:text-white/60 transition-all duration-500 transform group-hover:scale-105">
                         {service.number}
                       </span>
                       <div className="p-4 rounded-full transition-all duration-500 transform group-hover:rotate-12 group-hover:scale-110" style={{
@@ -125,7 +125,7 @@ const ServicesPage: React.FC = () => {
                       </div>
                     </div>
 
-                    <h3 className="text-2xl font-bold mb-4 transition-all duration-500 transform group-hover:translate-x-2" style={{
+                    <h3 className="text-xl sm:text-2xl font-bold mb-4 transition-all duration-500 transform group-hover:translate-x-2" style={{
                       color: index === 0 ? 'var(--gradient-start)' : index === 1 ? 'var(--gradient-mid)' : 'var(--gradient-end)'
                     }}>
                       {service.title}

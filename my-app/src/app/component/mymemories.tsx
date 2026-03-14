@@ -16,6 +16,7 @@ const MemoriesPage: React.FC = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [isAutoPlay, setIsAutoPlay] = useState<boolean>(true);
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
 
   // Photos array should be defined before useEffect
   const photos: Photo[] = [
@@ -44,6 +45,13 @@ const MemoriesPage: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 640);
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
   // Auto-play slideshow
   useEffect(() => {
     if (!isAutoPlay || isHovered) return;
@@ -59,34 +67,55 @@ const MemoriesPage: React.FC = () => {
   const prevImage = () => setCurrentImageIndex((prev) => (prev - 1 + photos.length) % photos.length);
   const goToImage = (index: number) => setCurrentImageIndex(index);
 
+  const getSlideTransformClass = (position: number): string => {
+    if (isMobile) {
+      if (position === 0) return "[transform:translateX(0px)_translateZ(0px)_rotateY(0deg)_scale(1)] opacity-100 z-30";
+      if (position === -1) return "[transform:translateX(-95px)_translateZ(-110px)_rotateY(-14deg)_scale(0.86)] opacity-60 z-20";
+      if (position === 1) return "[transform:translateX(95px)_translateZ(-110px)_rotateY(14deg)_scale(0.86)] opacity-60 z-20";
+      return "[transform:translateX(0px)_translateZ(-110px)_rotateY(0deg)_scale(0.86)] opacity-0 z-10 pointer-events-none";
+    }
+
+    if (position === 0) return "[transform:translateX(0px)_translateZ(0px)_rotateY(0deg)_scale(1)] opacity-100 z-30";
+    if (position === -1) return "[transform:translateX(-200px)_translateZ(-200px)_rotateY(-25deg)_scale(0.8)] opacity-60 z-20";
+    if (position === 1) return "[transform:translateX(200px)_translateZ(-200px)_rotateY(25deg)_scale(0.8)] opacity-60 z-20";
+    if (position === -2) return "[transform:translateX(-400px)_translateZ(-200px)_rotateY(-50deg)_scale(0.8)] opacity-60 z-10";
+    if (position === 2) return "[transform:translateX(400px)_translateZ(-200px)_rotateY(50deg)_scale(0.8)] opacity-60 z-10";
+    return "[transform:translateX(0px)_translateZ(-200px)_rotateY(0deg)_scale(0.8)] opacity-0 z-10 pointer-events-none";
+  };
+
+  const getCardAccentClass = (index: number): string => {
+    const palette = ["memory-card-start", "memory-card-mid", "memory-card-end"];
+    return palette[index % 3];
+  };
+
   return (
-    <div className="min-h-screen text-white py-20 px-6 overflow-hidden">
+    <div className="min-h-screen text-white py-14 sm:py-20 px-4 sm:px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className={`text-center mb-16 transform transition-all duration-1200 ease-out ${
           isVisible ? 'translate-y-0 opacity-100' : '-translate-y-16 opacity-0'
         }`}>
-          <h1 className="text-5xl lg:text-6xl font-bold mb-6">
+          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-6">
             <span className="gradient-text">
               Memories
             </span>
           </h1>
-          <div className={`w-24 h-1 mx-auto rounded-full transform transition-all duration-1000 delay-300 ${
+          <div className={`w-24 h-1 mx-auto rounded-full gradient-bg transform transition-all duration-1000 delay-300 ${
             isVisible ? 'scale-x-100' : 'scale-x-0'
-          }`} style={{background: 'linear-gradient(to right, var(--gradient-mid), var(--gradient-end), var(--gradient-start))'}}></div>
-          <p className="text-gray-400 mt-6 text-lg max-w-2xl mx-auto">
+          }`}></div>
+          <p className="text-gray-400 mt-6 text-base sm:text-lg max-w-2xl mx-auto">
             A glimpse into my journey, memories, and moments that define who I am.
           </p>
         </div>
 
         {/* Main Slideshow Container */}
-        <div className={`relative transform transition-all duration-1000 ease-out ${
+        <div className={`relative transform transition-all duration-1000 delay-400 ease-out ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-        }`} style={{ transitionDelay: '400ms' }}>
+        }`}>
           
           {/* 3D Perspective Container */}
           <div 
-            className="relative h-[70vh] perspective-1000"
+            className="relative h-[62vh] sm:h-[70vh] perspective-1000"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
@@ -101,37 +130,25 @@ const MemoriesPage: React.FC = () => {
                   <div
                     key={photo.id}
                     className={`absolute transition-all duration-700 ease-out cursor-pointer ${
-                      position === 0 ? 'z-30' : position === -1 || position === 1 ? 'z-20' : 'z-10'
+                      getSlideTransformClass(position)
                     }`}
-                    style={{
-                      transform: `
-                        translateX(${position * 200}px) 
-                        translateZ(${position === 0 ? 0 : -200}px) 
-                        rotateY(${position * 25}deg) 
-                        scale(${position === 0 ? 1 : 0.8})
-                      `,
-                      opacity: Math.abs(position) > 2 ? 0 : position === 0 ? 1 : 0.6
-                    }}
                     onClick={() => position !== 0 && goToImage(index)}
                   >
                     <div className={`relative rounded-2xl overflow-hidden border-4 transition-all duration-500 ${
                       position === 0 
-                        ? 'shadow-2xl' 
+                        ? `${getCardAccentClass(index)} shadow-2xl` 
                         : 'hover:border-gray-400/70'
-                    }`} style={{
-                      borderColor: position === 0 ? (index % 3 === 0 ? 'var(--gradient-start)' : index % 3 === 1 ? 'var(--gradient-mid)' : 'var(--gradient-end)') : 'rgb(107, 114, 128, 0.5)',
-                      boxShadow: position === 0 ? (index % 3 === 0 ? '0 0 30px rgba(183, 29, 238, 0.3)' : index % 3 === 1 ? '0 0 30px rgba(201, 77, 135, 0.3)' : '0 0 30px rgba(216, 118, 49, 0.3)') : 'none'
-                    }}>
+                    }`}> 
                       <Image
                         src={photo.src}
                         alt={photo.title}
-                        width={320}
-                        height={384}
+                        width={isMobile ? 230 : 320}
+                        height={isMobile ? 276 : 384}
                         className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                       />
                       
                       {/* Image Overlay */}
-                      <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent transition-opacity duration-500 ${
+                      <div className={`absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent transition-opacity duration-500 ${
                         position === 0 ? 'opacity-100' : 'opacity-0'
                       }`}>
                         {position === 0 && (
@@ -142,7 +159,7 @@ const MemoriesPage: React.FC = () => {
                               </span>
                               <Heart size={16} className="text-red-400" />
                             </div>
-                            <h3 className="text-xl font-bold text-white mb-2">{photo.title}</h3>
+                            <h3 className="text-lg sm:text-xl font-bold text-white mb-2">{photo.title}</h3>
                             <p className="text-gray-300 text-sm">{photo.description}</p>
                           </div>
                         )}
@@ -154,30 +171,21 @@ const MemoriesPage: React.FC = () => {
             </div>
 
             {/* Navigation Arrows */}
-            <button onClick={prevImage} className="absolute left-4 top-1/2 -translate-y-1/2 z-40 p-3 bg-black/50 rounded-full border transition-all duration-300 hover:scale-110 backdrop-blur-sm" style={{
-              borderColor: 'var(--gradient-start)',
-              backgroundColor: 'rgb(0, 0, 0, 0.5)'
-            }} onMouseEnter={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, var(--gradient-start)/50, var(--gradient-mid)/30)'} onMouseLeave={(e) => e.currentTarget.style.background = 'rgb(0, 0, 0, 0.5)'}>
+            <button type="button" aria-label="Previous image" title="Previous image" onClick={prevImage} className="memory-nav-btn memory-nav-prev absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-40 p-2 sm:p-3 rounded-full border transition-all duration-300 hover:scale-110 backdrop-blur-sm">
               <ChevronLeft size={24} className="text-white" />
             </button>
-            <button onClick={nextImage} className="absolute right-4 top-1/2 -translate-y-1/2 z-40 p-3 bg-black/50 rounded-full border transition-all duration-300 hover:scale-110 backdrop-blur-sm" style={{
-              borderColor: 'var(--gradient-end)',
-              backgroundColor: 'rgb(0, 0, 0, 0.5)'
-            }} onMouseEnter={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, var(--gradient-end)/50, var(--gradient-mid)/30)'} onMouseLeave={(e) => e.currentTarget.style.background = 'rgb(0, 0, 0, 0.5)'}>
+            <button type="button" aria-label="Next image" title="Next image" onClick={nextImage} className="memory-nav-btn memory-nav-next absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-40 p-2 sm:p-3 rounded-full border transition-all duration-300 hover:scale-110 backdrop-blur-sm">
               <ChevronRight size={24} className="text-white" />
             </button>
 
             {/* Auto-play Control */}
-            <button onClick={() => setIsAutoPlay(!isAutoPlay)} className="absolute top-4 right-4 z-40 p-3 bg-black/50 rounded-full border transition-all duration-300 hover:scale-110 backdrop-blur-sm" style={{
-              borderColor: 'var(--gradient-mid)',
-              backgroundColor: 'rgb(0, 0, 0, 0.5)'
-            }} onMouseEnter={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, var(--gradient-mid)/50, var(--gradient-end)/30)'} onMouseLeave={(e) => e.currentTarget.style.background = 'rgb(0, 0, 0, 0.5)'}>
+            <button type="button" aria-label={isAutoPlay ? 'Pause slideshow' : 'Play slideshow'} title={isAutoPlay ? 'Pause slideshow' : 'Play slideshow'} onClick={() => setIsAutoPlay(!isAutoPlay)} className="memory-nav-btn memory-nav-mid absolute top-4 right-4 z-40 p-3 rounded-full border transition-all duration-300 hover:scale-110 backdrop-blur-sm">
               {isAutoPlay ? <Pause size={20} className="text-white" /> : <Play size={20} className="text-white" />}
             </button>
 
             {/* Photo Counter */}
             <div className="absolute top-4 left-4 z-40 flex items-center gap-2 px-4 py-2 bg-black/50 rounded-full border border-gray-600 backdrop-blur-sm">
-              <Camera size={16} style={{color: 'var(--gradient-start)'}} />
+              <Camera size={16} className="text-accent-gradient" />
               <span className="text-white text-sm font-medium">
                 {currentImageIndex + 1} / {photos.length}
               </span>
@@ -185,12 +193,13 @@ const MemoriesPage: React.FC = () => {
           </div>
 
           {/* Thumbnail Navigation */}
-          <div className="flex justify-center mt-12 gap-3 px-4">
+          <div className="flex justify-start sm:justify-center mt-10 sm:mt-12 gap-3 px-2 sm:px-4 overflow-x-auto pb-2">
             {photos.map((photo, index) => (
               <button
                 key={photo.id}
+                type="button"
                 onClick={() => goToImage(index)}
-                className={`relative w-16 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-110 ${
+                className={`relative shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-110 ${
                   index === currentImageIndex 
                     ? 'border-purple-500 shadow-lg shadow-purple-500/50' 
                     : 'border-gray-600 hover:border-purple-400'
@@ -204,7 +213,7 @@ const MemoriesPage: React.FC = () => {
                   className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                 />
                 {index === currentImageIndex && (
-                  <div style={{background: 'linear-gradient(135deg, var(--gradient-start)/20, var(--gradient-mid)/20, var(--gradient-end)/20)'}} className="absolute inset-0"></div>
+                  <div className="absolute inset-0 memory-thumb-overlay"></div>
                 )}
               </button>
             ))}
@@ -212,12 +221,7 @@ const MemoriesPage: React.FC = () => {
 
           {/* Progress Bar */}
           <div className="mt-8 mx-auto max-w-md">
-            <div className="w-full bg-gray-800 rounded-full h-1 overflow-hidden">
-              <div className="h-full rounded-full transition-all duration-300" style={{
-              background: 'linear-gradient(to right, var(--gradient-start), var(--gradient-mid), var(--gradient-end))',
-              width: `${((currentImageIndex + 1) / photos.length) * 100}%`
-            }}></div>
-            </div>
+            <progress className="memory-progress w-full h-1 rounded-full overflow-hidden" max={photos.length} value={currentImageIndex + 1}></progress>
             <div className="flex justify-between mt-2 text-xs text-gray-400">
               <span>Journey Memories</span>
               <span>{Math.round(((currentImageIndex + 1) / photos.length) * 100)}% Complete</span>
@@ -230,6 +234,74 @@ const MemoriesPage: React.FC = () => {
       <style jsx>{`
         .perspective-1000 {
           perspective: 1000px;
+        }
+
+        .memory-card-start {
+          border-color: var(--gradient-start);
+          box-shadow: 0 0 30px rgba(183, 29, 238, 0.3);
+        }
+
+        .memory-card-mid {
+          border-color: var(--gradient-mid);
+          box-shadow: 0 0 30px rgba(201, 77, 135, 0.3);
+        }
+
+        .memory-card-end {
+          border-color: var(--gradient-end);
+          box-shadow: 0 0 30px rgba(216, 118, 49, 0.3);
+        }
+
+        .memory-nav-btn {
+          background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .memory-nav-prev {
+          border-color: var(--gradient-start);
+        }
+
+        .memory-nav-prev:hover {
+          background: linear-gradient(135deg, color-mix(in srgb, var(--gradient-start) 50%, transparent), color-mix(in srgb, var(--gradient-mid) 30%, transparent));
+        }
+
+        .memory-nav-next {
+          border-color: var(--gradient-end);
+        }
+
+        .memory-nav-next:hover {
+          background: linear-gradient(135deg, color-mix(in srgb, var(--gradient-end) 50%, transparent), color-mix(in srgb, var(--gradient-mid) 30%, transparent));
+        }
+
+        .memory-nav-mid {
+          border-color: var(--gradient-mid);
+        }
+
+        .memory-nav-mid:hover {
+          background: linear-gradient(135deg, color-mix(in srgb, var(--gradient-mid) 50%, transparent), color-mix(in srgb, var(--gradient-end) 30%, transparent));
+        }
+
+        .memory-thumb-overlay {
+          background: linear-gradient(135deg, color-mix(in srgb, var(--gradient-start) 20%, transparent), color-mix(in srgb, var(--gradient-mid) 20%, transparent), color-mix(in srgb, var(--gradient-end) 20%, transparent));
+        }
+
+        .memory-progress {
+          background-color: rgb(31, 41, 55);
+          color: var(--gradient-start);
+        }
+
+        .memory-progress::-webkit-progress-bar {
+          background-color: rgb(31, 41, 55);
+          border-radius: 9999px;
+        }
+
+        .memory-progress::-webkit-progress-value {
+          background: linear-gradient(to right, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+          border-radius: 9999px;
+          transition: width 300ms ease;
+        }
+
+        .memory-progress::-moz-progress-bar {
+          background: linear-gradient(to right, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+          border-radius: 9999px;
         }
       `}</style>
     </div>

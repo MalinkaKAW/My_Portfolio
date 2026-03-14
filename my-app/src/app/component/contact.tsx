@@ -105,26 +105,26 @@ const ContactPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen text-white py-20 px-6">
+    <div className="min-h-screen text-white py-14 sm:py-20 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className={`text-center mb-16 transform transition-all duration-1200 ease-out ${
           isVisible ? 'translate-y-0 opacity-100' : '-translate-y-16 opacity-0'
         }`}>
-          <h1 className="text-4xl lg:text-5xl font-bold mb-6">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
             Let&apos;s <span className="gradient-text">work together</span>
           </h1>
           <div className={`w-24 h-1 mx-auto rounded-full transform transition-all duration-1000 delay-300 ${
             isVisible ? 'scale-x-100' : 'scale-x-0'
           }`} style={{background: 'linear-gradient(to right, var(--gradient-start), var(--gradient-mid), var(--gradient-end))'}}></div>
-          <p className="text-gray-400 mt-6 text-lg max-w-4xl mx-auto leading-relaxed">
+          <p className="text-gray-400 mt-6 text-base sm:text-lg max-w-4xl mx-auto leading-relaxed">
             Whether you need a website, mobile app, or a striking design, I&apos;m ready to turn your ideas into reality. 
             Let&apos;s collaborate and create something exceptional together. I look forward to connecting with you!
           </p>
         </div>
 
         {/* Main Content */}
-        <div className={`grid lg:grid-cols-3 gap-12 transform transition-all duration-1000 ease-out ${
+        <div className={`grid lg:grid-cols-3 gap-8 sm:gap-12 transform transition-all duration-1000 ease-out ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
         }`} style={{ transitionDelay: '400ms' }}>
           
