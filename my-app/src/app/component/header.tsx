@@ -26,13 +26,28 @@ export default function Header() {
     setActiveSection(sectionId)
   }
 
-  const handleDownloadCV = () => {
-    const link = document.createElement("a")
-    link.href = "/cv/Malinka Wickramasinghe.pdf"
-    link.download = "Malinka Wickramasinghe.pdf"
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
+  const handleDownloadCV = async () => {
+    const cvPath = "/cv/Malinka%20Wickramasinghe%20(1).pdf"
+
+    try {
+      const response = await fetch(cvPath)
+      if (!response.ok) {
+        throw new Error("CV file not found")
+      }
+
+      const blob = await response.blob()
+      const blobUrl = URL.createObjectURL(blob)
+      const link = document.createElement("a")
+      link.href = blobUrl
+      link.download = "Malinka_Wickramasinghe_CV.pdf"
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      URL.revokeObjectURL(blobUrl)
+    } catch {
+      // Fallback for browsers that block programmatic downloads.
+      window.open(cvPath, "_blank", "noopener,noreferrer")
+    }
   }
 
   useEffect(() => {
@@ -230,6 +245,7 @@ export default function Header() {
               </div>
 
               <button
+                type="button"
                 onClick={handleDownloadCV}
                 className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 text-white rounded-full font-semibold text-base sm:text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl"
                 style={{
