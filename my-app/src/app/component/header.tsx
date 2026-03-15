@@ -247,12 +247,12 @@ export default function Header() {
             {/* Right Content - Static Profile Image Only */}
             <div className="order-1 lg:order-2 flex justify-center lg:justify-start lg:pl-12">
               <div
-                className={`relative transform transition-all duration-1000 delay-200 ${
+                className={`relative mx-auto lg:mx-0 transform transition-all duration-1000 delay-200 ${
                   isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
                 }`}
               >
                 {/* Profile Image - No animation, larger for desktop */}
-                <div className="relative w-44 h-44 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-96 lg:h-96 xl:w-[30rem] xl:h-[30rem] rounded-full overflow-visible lg:ml-8 xl:ml-20">
+                <div className="relative mx-auto lg:mx-0 w-44 h-44 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-96 lg:h-96 xl:w-[30rem] xl:h-[30rem] rounded-full overflow-visible lg:ml-8 xl:ml-20">
                   {/* Glowing radial light behind the profile image */}
                   <div className="absolute inset-0 flex items-center justify-center -z-10">
                     <span className="glow-radial w-40 h-40 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-[28rem] xl:h-[28rem] rounded-full" aria-hidden="true"></span>
